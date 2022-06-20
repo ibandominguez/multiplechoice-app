@@ -7,12 +7,12 @@ export interface Group {
 
 export interface GroupsState {
   loading: 'idle' | 'loading' | 'failed',
-  groups: Group[]
+  list: Group[]
 }
 
 const initialState: GroupsState = {
   loading: 'idle',
-  groups: []
+  list: []
 }
 
 export const fetchGroups = createAsyncThunk('groups/fetchAll', async () => {
@@ -28,23 +28,20 @@ const groupsSlice = createSlice({
   initialState,
   reducers: {
     addGroup: (state: GroupsState, action: PayloadAction<Group>) => {
-      state.groups.push(action.payload)
+      state.list.push(action.payload)
     },
     updateGroup: (state: GroupsState, action: PayloadAction<Group>) => {
-      const groupIndex = state.groups.map(group => group.id).indexOf(action.payload.id)
+      const groupIndex = state.list.map(group => group.id).indexOf(action.payload.id)
 
       if (groupIndex !== -1) {
-        state.groups[groupIndex] = action.payload
+        state.list[groupIndex] = action.payload
       }
     },
     removeGroup: (state: GroupsState, action: PayloadAction<Group>) => {
-      const group = state.groups.find((group: Group) => group.id === action.payload.id)
+      const groupIndex = state.list.map(group => group.id).indexOf(action.payload.id)
 
-      if (group) {
-        return {
-          ...state,
-          groups: state.groups.filter((group: Group) => group.id !== action.payload.id)
-        }
+      if (groupIndex !== -1) {
+        state.list.splice(groupIndex, 1)
       }
     }
   },
@@ -55,7 +52,7 @@ const groupsSlice = createSlice({
       })
       .addCase(fetchGroups.fulfilled, (state: GroupsState, action: PayloadAction<Group[]>) => {
         state.loading = 'idle'
-        state.groups = action.payload
+        state.list = action.payload
       })
       .addCase(fetchGroups.rejected, (state: GroupsState) => {
         state.loading = 'failed'

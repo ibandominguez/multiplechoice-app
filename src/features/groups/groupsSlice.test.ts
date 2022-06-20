@@ -4,41 +4,41 @@ import groupReducer, {
   addGroup,
   updateGroup,
   removeGroup
-} from './groupsSlice';
+} from './groupsSlice'
 
 describe('groups reducer', () => {
   const initialState: GroupsState = {
     loading: 'idle',
-    groups: []
+    list: []
   }
 
   it('should handle initial state', () => {
     expect(groupReducer(undefined, { type: 'unknown' })).toEqual({
       loading: 'idle',
-      groups: []
+      list: []
     })
   })
 
   it('should add a Group', () => {
     const group: Group = { id: 1, title: 'MyGroup' }
     const actual = groupReducer(initialState, addGroup(group))
-    expect(actual.groups.length).toEqual(1)
+    expect(actual.list.length).toEqual(1)
   })
 
   it('should update a Group', () => {
     const group: Group = { id: 1, title: 'MyGroup' }
     const updatedGroup: Group = { id: 1, title: 'MyUpdatedGroup' }
     const actual = groupReducer(initialState, addGroup(group))
-    expect(actual.groups[0].title).toEqual('MyGroup')
+    expect(actual.list[0].title).toEqual('MyGroup')
     const updated = groupReducer(actual, updateGroup(updatedGroup))
-    expect(updated.groups[0].title).toEqual('MyUpdatedGroup')
+    expect(updated.list[0].title).toEqual('MyUpdatedGroup')
   })
 
   it('should remove a Group', () => {
     const group: Group = { id: 1, title: 'MyGroup' }
     const actual = groupReducer(initialState, addGroup(group))
-    expect(actual.groups.length).toEqual(1)
+    expect(actual.list.length).toEqual(1)
     const updated = groupReducer(actual, removeGroup(group))
-    expect(updated.groups.length).toEqual(0)
+    expect(updated.list.length).toEqual(0)
   })
 })
