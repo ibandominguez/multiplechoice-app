@@ -1,22 +1,13 @@
 import { configureStore, createSlice, Store, Action, ThunkAction } from '@reduxjs/toolkit'
+import groupsReducer from '../features/groups/groupsSlice'
 
 export const store: Store = configureStore({
   reducer: {
-    // Test reducer, to be removed
-    // When features are added
-    test: createSlice({
-      name: 'test',
-      initialState: { hello: 'world' },
-      reducers: {
-        helloWorld: (state) => {
-          state.hello = 'world'
-        }
-      }
-    }).reducer
+    groups: groupsReducer
   }
 })
 
-export type AppDispath = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch
 export type RootState = ReturnType<typeof store.getState>
 
 export type AppThunk<ReturnType = void> = ThunkAction<

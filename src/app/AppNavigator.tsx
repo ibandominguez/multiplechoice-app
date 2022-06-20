@@ -1,32 +1,20 @@
-import * as React from 'react'
-import { Text, View } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-
-function ExampleOne(): JSX.Element {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>One!</Text>
-    </View>
-  )
-}
-
-function ExampleTwo(): JSX.Element {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Two!</Text>
-    </View>
-  )
-}
+import React from 'react'
+import { NavigationContainer, NavigationHelpers, ParamListBase, TabNavigationState } from '@react-navigation/native'
+import { BottomTabNavigationEventMap, createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import GroupsContainer from '../features/groups/GroupsContainer'
 
 const Tab = createBottomTabNavigator()
+
+export type TabProps = {
+  navigation: NavigationHelpers<ParamListBase, BottomTabNavigationEventMap>
+  state: TabNavigationState<ParamListBase>
+}
 
 export default function AppNavigator(): JSX.Element {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name='ExampleOne' component={ExampleOne} />
-        <Tab.Screen name='ExampleTwo' component={ExampleTwo} />
+        <Tab.Screen name='Groups' component={GroupsContainer} />
       </Tab.Navigator>
     </NavigationContainer>
   )
