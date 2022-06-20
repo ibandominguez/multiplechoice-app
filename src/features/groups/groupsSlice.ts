@@ -16,7 +16,12 @@ const initialState: GroupsState = {
 }
 
 export const fetchGroups = createAsyncThunk('groups/fetchAll', async () => {
-  await setTimeout(() => { }, 250)
+  const waitUntil = (time: number) => {
+    return new Promise(resolve => setTimeout(resolve, time))
+  }
+
+  await waitUntil(500)
+
   return [
     { id: 1, title: 'GroupOne' },
     { id: 2, title: 'GroupTwo' }
